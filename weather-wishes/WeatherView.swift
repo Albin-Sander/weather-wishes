@@ -39,17 +39,36 @@ struct WeatherView: View {
     
     
     var body: some View {
-        VStack {
+        ZStack {
+            Color(.systemBlue).ignoresSafeArea()
             if let weather = weather {
-                Text(weather.currentWeather.temperature.description)
+                VStack {
+                    Spacer()
+                    Image(systemName: weather.currentWeather.symbolName)
+                        .font(.custom("Helvetica Neue", size: 150))
+                    Spacer()
+                    HStack {
+                        Text(weather
+                            .currentWeather.temperature.description)
+                        .font(.headline)
+                        
+                        
+                        
+                        Image(systemName: weather.currentWeather.symbolName)
+                    }
+                    HStack {
+                        Text("Feels like temperature:")
+                        Text(weather.currentWeather.apparentTemperature
+                            .description)
+                    }
+                    Spacer()
+                }
+                
             } else {
                 ProgressView()
                     .task {
                         await getWeather()
                     }
-            }
-            if let location = LocationManager.shared.userLocation {
-                Text("\(location)")
             }
             
         }
