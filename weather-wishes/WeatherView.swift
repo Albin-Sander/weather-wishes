@@ -46,6 +46,7 @@ struct WeatherView: View {
                     Spacer()
                     Image(systemName: weather.currentWeather.symbolName)
                         .font(.custom("Helvetica Neue", size: 150))
+                        .foregroundColor(Color.yellow)
                     Spacer()
                     HStack {
                         Text(weather
@@ -60,8 +61,12 @@ struct WeatherView: View {
                         Text("Feels like temperature:")
                         Text(weather.currentWeather.apparentTemperature
                             .description)
+                        
                     }
                     Spacer()
+                }
+                .task {
+                    await getWeather()
                 }
                 
             } else {
@@ -72,6 +77,8 @@ struct WeatherView: View {
             }
             
         }
+        
+        
     }
     
 }
