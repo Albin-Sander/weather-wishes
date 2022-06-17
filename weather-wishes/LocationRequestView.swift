@@ -9,18 +9,32 @@ import SwiftUI
 
 struct LocationRequestView: View {
     var body: some View {
-        Button {
-            LocationManager.shared.requestLocation()
-        } label: {
-            Text("Allow Location")
+        VStack {
+            Spacer()
+            Image(systemName: "sunrise.fill")
+                .font(.system(size: 80))
+                .foregroundColor(.yellow)
                 .padding()
-                .foregroundColor(Color.white)
+                .background(Color.blue)
+                .cornerRadius(20)
+            
+            
+            
+            Spacer()
+            Text("Please allow location access")
+            Button {
+                LocationManager.shared.requestLocation()
+            } label: {
+                Text("Allow Location")
+                    .padding()
+                    .foregroundColor(Color.white)
+            }
+            .frame(width: UIScreen.main.bounds.width)
+            .padding(.horizontal, -32)
+            .background(Color.blue)
+            .clipShape(Capsule())
+            .padding()
         }
-        .frame(width: UIScreen.main.bounds.width)
-        .padding(.horizontal, -32)
-        .background(Color.blue)
-        .clipShape(Capsule())
-        .padding()
         
         
     }
