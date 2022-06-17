@@ -11,18 +11,12 @@ import CoreLocation
 
 struct WeatherView: View {
     static let location: CLLocation =
-        CLLocation(
-            latitude: .init(LocationManager.shared.lat!),
-            longitude: .init(LocationManager.shared.long!)
-        )
+    CLLocation(
+        latitude: .init(LocationManager.shared.lat ?? 37.3230),
+        longitude: .init(LocationManager.shared.long ?? 122.0322)
+    )
     
     @State var weather: Weather?
-    
-    init() {
-        print("I'm printing this")
-        print(LocationManager.shared.lat)
-        print(LocationManager.shared.long)
-    }
     
     func getWeather() async {
         do {
@@ -50,12 +44,14 @@ struct WeatherView: View {
                     Spacer()
                     HStack {
                         Text(weather
-                            .currentWeather.temperature.description)
-                        .font(.headline)
+                            .currentWeather.temperature
+                            .description
+                        )
                         
+                        .font(.system(size: 35.0))
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
                         
-                        
-                        Image(systemName: weather.currentWeather.symbolName)
                     }
                     HStack {
                         Text("Feels like temperature:")
@@ -63,6 +59,9 @@ struct WeatherView: View {
                             .description)
                         
                     }
+                    .padding(.top)
+                    .foregroundColor(.white)
+                    .font(.system(size: 20))
                     Spacer()
                 }
                 .task {
