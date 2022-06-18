@@ -6,6 +6,7 @@
 //
 
 import CoreLocation
+import MapKit
 
 class LocationManager: NSObject, ObservableObject {
     private let manager = CLLocationManager()
@@ -13,6 +14,7 @@ class LocationManager: NSObject, ObservableObject {
     @Published var coordinates: CLLocationCoordinate2D?
     @Published var long: Double?
     @Published var lat: Double?
+    @Published var city: String?
     static let shared = LocationManager()
     
     override init() {
@@ -54,5 +56,36 @@ extension LocationManager: CLLocationManagerDelegate {
         self.coordinates = location.coordinate
         self.long = location.coordinate.longitude
         self.lat = location.coordinate.latitude
+        
+        
+        let geoCoder = CLGeocoder()
+        
+                geoCoder.reverseGeocodeLocation(location, completionHandler:
+                    {
+                        placemarks, error -> Void in
+
+                        // Place details
+                        guard let placeMark = placemarks?.first else { return }
+
+                        // Location name
+                        if let locationName = placeMark.location {
+                            print(locationName)
+                        }
+                        
+                        // City
+                        if let city = placeMark.subAdministrativeArea {
+                            print(city)
+                            self.city = city
+                        }
+                       
+                     
+                    /*
+                        // Country
+                        if let country = placeMark.country {
+                            print(country)
+                        }
+                       */
+                })
+        
     }
 }

@@ -38,6 +38,11 @@ struct WeatherView: View {
             if let weather = weather {
                 VStack {
                     Spacer()
+                    Text(LocationManager.shared.city!)
+                        .font(.system(size: 35.0))
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                    Spacer()
                     Image(systemName: weather.currentWeather.symbolName)
                         .font(.custom("Helvetica Neue", size: 150))
                         .foregroundColor(Color.yellow)
