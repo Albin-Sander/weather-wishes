@@ -10,6 +10,7 @@ import WeatherKit
 import CoreLocation
 
 struct WeatherView: View {
+    @Environment(\.scenePhase) var scenePhase
     static let location: CLLocation =
     CLLocation(
         latitude: .init(LocationManager.shared.lat ?? 37.3230),
@@ -68,6 +69,15 @@ struct WeatherView: View {
                     .foregroundColor(.white)
                     .font(.system(size: 20))
                     Spacer()
+                }
+                .onChange(of: scenePhase) { newPhase in
+                    
+                    if newPhase == .active {
+                        Task {
+                            await getWeather()
+                        }
+                    }
+                    
                 }
                 .task {
                     await getWeather()

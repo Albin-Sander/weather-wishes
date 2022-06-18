@@ -55,6 +55,7 @@
 		B17624B6285E20CC00CEA2B6 /* Lock_Screen_Wishes.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Lock_Screen_Wishes.intentdefinition; sourceTree = "<group>"; };
 		B17624B7285E20CD00CEA2B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B17624B9285E20CD00CEA2B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B17624C3285E243500CEA2B6 /* Lock Screen WishesExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Lock Screen WishesExtension.entitlements"; sourceTree = "<group>"; };
 		B1828A3B28550E7B0098B6B0 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B1828A3D285513450098B6B0 /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
 		B189B3CB2850FA7E009A1E36 /* weather-wishes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "weather-wishes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +110,7 @@
 		B189B3C22850FA7E009A1E36 = {
 			isa = PBXGroup;
 			children = (
+				B17624C3285E243500CEA2B6 /* Lock Screen WishesExtension.entitlements */,
 				B189B3CD2850FA7E009A1E36 /* weather-wishes */,
 				B17624B3285E20CC00CEA2B6 /* Lock Screen Wishes */,
 				B17624AE285E20CC00CEA2B6 /* Frameworks */,
@@ -283,6 +285,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Lock Screen WishesExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -311,6 +314,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Lock Screen WishesExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
