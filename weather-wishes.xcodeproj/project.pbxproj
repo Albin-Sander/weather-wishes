@@ -14,6 +14,8 @@
 		B189B3D32850FA85009A1E36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B189B3D22850FA85009A1E36 /* Assets.xcassets */; };
 		B189B3D62850FA85009A1E36 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B189B3D52850FA85009A1E36 /* Preview Assets.xcassets */; };
 		B189B3DD2850FAA3009A1E36 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189B3DC2850FAA3009A1E36 /* WeatherView.swift */; };
+		B1CB7ED629F3E1D000538D11 /* HourlyForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CB7ED529F3E1D000538D11 /* HourlyForecastView.swift */; };
+		B1CB7EDA29F40DFE00538D11 /* SevenDayForeCastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CB7ED929F40DFE00538D11 /* SevenDayForeCastView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +43,8 @@
 		B189B3D52850FA85009A1E36 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B189B3DC2850FAA3009A1E36 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		B189B3DE2851350F009A1E36 /* weather-wishes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "weather-wishes.entitlements"; sourceTree = "<group>"; };
+		B1CB7ED529F3E1D000538D11 /* HourlyForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecastView.swift; sourceTree = "<group>"; };
+		B1CB7ED929F40DFE00538D11 /* SevenDayForeCastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenDayForeCastView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,8 @@
 				B1828A3B28550E7B0098B6B0 /* LocationManager.swift */,
 				B189B3D22850FA85009A1E36 /* Assets.xcassets */,
 				B189B3D42850FA85009A1E36 /* Preview Content */,
+				B1CB7ED529F3E1D000538D11 /* HourlyForecastView.swift */,
+				B1CB7ED929F40DFE00538D11 /* SevenDayForeCastView.swift */,
 			);
 			path = "weather-wishes";
 			sourceTree = "<group>";
@@ -176,6 +182,8 @@
 			files = (
 				B1828A3C28550E7B0098B6B0 /* LocationManager.swift in Sources */,
 				B189B3DD2850FAA3009A1E36 /* WeatherView.swift in Sources */,
+				B1CB7EDA29F40DFE00538D11 /* SevenDayForeCastView.swift in Sources */,
+				B1CB7ED629F3E1D000538D11 /* HourlyForecastView.swift in Sources */,
 				B189B3D12850FA7E009A1E36 /* ContentView.swift in Sources */,
 				B1828A3E285513450098B6B0 /* LocationRequestView.swift in Sources */,
 				B189B3CF2850FA7E009A1E36 /* weather_wishesApp.swift in Sources */,
