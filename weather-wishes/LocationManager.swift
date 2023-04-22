@@ -77,13 +77,6 @@ extension LocationManager: CLLocationManagerDelegate {
                             self.city = city
                         }
                        
-                     
-                    /*
-                        // Country
-                        if let country = placeMark.country {
-                            print(country)
-                        }
-                       */
                 })
         
     }

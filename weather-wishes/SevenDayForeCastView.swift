@@ -25,23 +25,25 @@ extension Date {
 struct SevenDayForeCastView: View {
     let dayWeatherList: [DayWeather]
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("7 day forecast")
-            
-            ForEach(dayWeatherList, id: \.date) { dailyWeather in
-                HStack {
-                    Text(dailyWeather.date.formatAsAbbreviatedDay())
-                    Image(systemName: dailyWeather.symbolName)
-                    
-                    Text(dailyWeather.highTemperature.formatted())
+     
+        VStack {
+            VStack(alignment: .leading) {
+                ForEach(dayWeatherList, id: \.date) { dailyWeather in
+                    VStack {
+                        HStack {
+                            Text(dailyWeather.date.formatAsAbbreviatedDay())
+                            Image(systemName: dailyWeather.symbolName)
+                            Spacer()
+                            Text(dailyWeather.highTemperature.formatted())
+                        }
+                    }
+                    Divider()
                 }
             }
-            
 
         }
-        .onAppear {
-            print("här \(dayWeatherList)")
-        }
+            .padding()
+       
     }
 }
 

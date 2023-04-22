@@ -13,7 +13,6 @@ struct HourlyForecastView: View {
     
     var body: some View {
         VStack {
-            Text("Hourly forecast")
             VStack(alignment: .leading) {
                 ForEach(hourWeatherlist, id: \.date) { hourWeatherItem in
                         
@@ -47,6 +46,7 @@ struct HourlyForecastView: View {
                         Divider()
                     }
                 }
+              
             }
             .padding()
         }
