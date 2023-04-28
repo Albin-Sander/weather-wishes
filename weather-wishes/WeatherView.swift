@@ -19,6 +19,8 @@ struct WeatherView: View {
     @State private var showTextfield = false
    @State var searchText = ""
     @FocusState private var focusedField: FocusedField?
+    @State private var manuallyEnteredCity = ""
+    @State private var manuallyEnteredCityCoord: CLLocationCoordinate2D?
     
     var body: some View {
         NavigationView {
@@ -28,18 +30,22 @@ struct WeatherView: View {
                     Section {
                         VStack {
                             Spacer()
-                            Text(LocationManager.shared.city!)
-                                .font(.system(size: 35.0))
-                                .fontWeight(.bold)
+                            if !manuallyEnteredCity.isEmpty {
+                                Text(manuallyEnteredCity)
+                                    .font(.system(size: 35.0))
+                                    .fontWeight(.bold)
+                            } else {
+                                Text(LocationManager.shared.city!)
+                                    .font(.system(size: 35.0))
+                                    .fontWeight(.bold)
+                            }
                   
                             Spacer()
                             Image(systemName: "\(weather.currentWeather.symbolName).fill")
                                 .font(.custom("Helvetica Neue", size: 130))
                      
                                 .foregroundStyle(iconColor.setIconColor(icon: weather.currentWeather.symbolName)[0], iconColor.setIconColor(icon: weather.currentWeather.symbolName).count > 1 ? iconColor.setIconColor(icon: weather.currentWeather.symbolName)[1] : Color.black)
-                                .onAppear {
-                                    print(weather.currentWeather.symbolName)
-                                }
+                            
                             Spacer()
                             HStack {
                                 Text(weather
@@ -82,6 +88,7 @@ struct WeatherView: View {
                                 .padding(.leading, 5)
                         Divider()
                     }
+                    .padding(.top, 10)
                     .listRowSeparator(.hidden)
               
                     SevenDayForeCastView(dayWeatherList: weather.dailyForecast.forecast)
@@ -109,10 +116,26 @@ struct WeatherView: View {
                         if showTextfield {
                             TextField("Search city",text: $searchText)
                                 .focused($focusedField, equals: .searchText)
+                                .onSubmit {
+                                    returnCityCoord(city: searchText) { (coordinates, error) in
+                                        if let error = error {
+                                            print("Error: \(error.localizedDescription)")
+                                        } else if let coordinates = coordinates {
+                                            manuallyEnteredCity = searchText
+                                            // Do something with the coordinates here
+                                            Task {
+                                                await viewModel.getWeatherForManual(coord: coordinates)
+                                            }
+                                            searchText = ""
+                                        }
+                                    }
+                                    
+                                }
                         }
                         Button(action: {
                             showTextfield.toggle()
                             focusedField = .searchText
+                            
                         }) {
                             Image(systemName: "magnifyingglass")
                         }
@@ -124,7 +147,19 @@ struct WeatherView: View {
      
         }
     }
-}
+    
+    
+    func returnCityCoord(city: String, completionHandler: @escaping (CLLocationCoordinate2D?, Error?) -> Void) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(city) { (placemarks, error) in
+            if let placemark = placemarks?.first {
+                let coordinates = placemark.location?.coordinate
+                completionHandler(coordinates, nil)
+            } else {
+                completionHandler(nil, error)
+            }
+        }
+    }}
 
 struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {

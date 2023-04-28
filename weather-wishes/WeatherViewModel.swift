@@ -39,6 +39,19 @@ import WeatherKit
         }
     }
     
+    func getWeatherForManual(coord: CLLocationCoordinate2D) async {
+        let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+        do {
+            weather = try await Task.detached(priority: .userInitiated) {
+                try await WeatherService.shared
+                    .weather(for: location)
+            }.value
+        } catch {
+            fatalError("\(error)")
+        }
+
+    }
+    
     func returnSymbolColor() -> Color {
         let currentSymbol = weather?.currentWeather.symbolName
         switch currentSymbol {
