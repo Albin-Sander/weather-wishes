@@ -24,6 +24,7 @@ extension Date {
 
 struct SevenDayForeCastView: View {
     let dayWeatherList: [DayWeather]
+    let iconColor = WeatherIconColor()
     var body: some View {
      
         VStack {
@@ -31,9 +32,18 @@ struct SevenDayForeCastView: View {
                 ForEach(dayWeatherList, id: \.date) { dailyWeather in
                     VStack {
                         HStack {
-                            Text(dailyWeather.date.formatAsAbbreviatedDay())
-                            Image(systemName: dailyWeather.symbolName)
+                            VStack {
+                                Text(dailyWeather.date.formatAsAbbreviatedDay())
+                                Text(dailyWeather.precipitationChance.formatted())
+                                    .font(.footnote)
+                            }
+                            Image(systemName: "\(dailyWeather.symbolName).fill")
+                                .foregroundStyle(iconColor.setIconColor(icon: dailyWeather.symbolName)[0], iconColor.setIconColor(icon: dailyWeather.symbolName).count > 1 ? iconColor.setIconColor(icon: dailyWeather.symbolName)[1] : Color.black)
+                                .font(.system(size: 20))
+                                .padding(.leading, 20)
                             Spacer()
+                            Text(dailyWeather.lowTemperature.formatted())
+                         Image(systemName: "arrow.right")
                             Text(dailyWeather.highTemperature.formatted())
                         }
                     }

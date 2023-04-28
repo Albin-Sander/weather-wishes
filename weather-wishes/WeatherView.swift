@@ -12,6 +12,7 @@ import WeatherKit
 struct WeatherView: View {
     @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = WeatherViewModel()
+    let iconColor = WeatherIconColor()
     
     var body: some View {
         List(0 ..< 1) { _ in
@@ -24,9 +25,13 @@ struct WeatherView: View {
                         .fontWeight(.bold)
           
                     Spacer()
-                    Image(systemName: weather.currentWeather.symbolName)
+                    Image(systemName: "\(weather.currentWeather.symbolName).fill")
                         .font(.custom("Helvetica Neue", size: 130))
-                        .foregroundColor(viewModel.returnSymbolColor())
+             
+                        .foregroundStyle(iconColor.setIconColor(icon: weather.currentWeather.symbolName)[0], iconColor.setIconColor(icon: weather.currentWeather.symbolName).count > 1 ? iconColor.setIconColor(icon: weather.currentWeather.symbolName)[1] : Color.black)
+                        .onAppear {
+                            print(weather.currentWeather.symbolName)
+                        }
                     Spacer()
                     HStack {
                         Text(weather
@@ -46,13 +51,12 @@ struct WeatherView: View {
                 
                     HStack {
                         Text("Wind")
-                        Text((weather.currentWeather.wind.speed.formatted()))
+                        Text(weather.currentWeather.wind.speed.formatted())
                     }
 
                     HourlyForecastView(hourWeatherlist: viewModel.hourlyWeatherData)
                
                     Spacer()
-                 
                 }
                 .onChange(of: scenePhase) { newPhase in
                         
@@ -63,9 +67,8 @@ struct WeatherView: View {
                     }
                 }
           
-                    SevenDayForeCastView(dayWeatherList: weather.dailyForecast.forecast)
+                SevenDayForeCastView(dayWeatherList: weather.dailyForecast.forecast)
                 
-                 
             } else {
                 ProgressView()
                     .task {
@@ -78,7 +81,6 @@ struct WeatherView: View {
                 await viewModel.getWeather()
             }
         }
-        
     }
 }
 

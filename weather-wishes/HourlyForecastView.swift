@@ -10,6 +10,7 @@ import WeatherKit
 
 struct HourlyForecastView: View {
     let hourWeatherlist: [HourWeather]
+    let iconColor = WeatherIconColor()
     
     var body: some View {
         VStack {
@@ -23,18 +24,11 @@ struct HourlyForecastView: View {
                                 .frame(width: 10, height: 40)
                             Text(hourWeatherItem.date.formatted(date: .omitted, time: .shortened))
                                 .padding(.leading, 5)
-                            if hourWeatherItem.symbolName == "rain" || hourWeatherItem.symbolName == "showers" {
-                                Image(systemName: "\(hourWeatherItem.symbolName)")
-                                    .foregroundColor(.blue)
-                                Text("Rain")
-                            } else if hourWeatherItem.symbolName == "clear" {
-                                Image(systemName: "\(hourWeatherItem.symbolName)")
-                                    .foregroundColor(.yellow)
-                            } else {
-                                Image(systemName: "\(hourWeatherItem.symbolName)")
-                                    .foregroundColor(.gray)
-                                Text("\(hourWeatherItem.precipitationChance.formatted())")
-                            }
+                         
+                                Image(systemName: "\(hourWeatherItem.symbolName).fill")
+                                .foregroundStyle(iconColor.setIconColor(icon: hourWeatherItem.symbolName)[0], iconColor.setIconColor(icon: hourWeatherItem.symbolName).count > 1 ? iconColor.setIconColor(icon: hourWeatherItem.symbolName)[1] : Color.black)
+                           
+                                
                                 
                             Spacer()
                             Text(hourWeatherItem.temperature.formatted())
@@ -45,10 +39,12 @@ struct HourlyForecastView: View {
                            
                         Divider()
                     }
+                   
                 }
               
             }
             .padding()
+           
         }
     }
 }
