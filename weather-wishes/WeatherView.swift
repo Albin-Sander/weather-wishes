@@ -57,6 +57,7 @@ struct WeatherView: View {
                     HourlyForecastView(hourWeatherlist: viewModel.hourlyWeatherData)
                
                     Spacer()
+                    
                 }
                 .onChange(of: scenePhase) { newPhase in
                         
@@ -66,6 +67,13 @@ struct WeatherView: View {
                         }
                     }
                 }
+                VStack(alignment: .leading) {
+                    Text("Next week")
+                        .font(.headline)
+                            .padding(.leading, 5)
+                    Divider()
+                }
+                .listRowSeparator(.hidden)
           
                 SevenDayForeCastView(dayWeatherList: weather.dailyForecast.forecast)
                 
@@ -75,7 +83,9 @@ struct WeatherView: View {
                         await viewModel.getWeather()
                     }
             }
+            
         }
+        .listRowSeparator(.hidden)
         .refreshable {
             Task {
                 await viewModel.getWeather()

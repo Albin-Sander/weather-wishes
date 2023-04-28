@@ -27,6 +27,7 @@ struct HourlyForecastView: View {
                          
                                 Image(systemName: "\(hourWeatherItem.symbolName).fill")
                                 .foregroundStyle(iconColor.setIconColor(icon: hourWeatherItem.symbolName)[0], iconColor.setIconColor(icon: hourWeatherItem.symbolName).count > 1 ? iconColor.setIconColor(icon: hourWeatherItem.symbolName)[1] : Color.black)
+                                .font(.custom("Helvetica Neue", size: 20))
                            
                                 
                                 
@@ -41,6 +42,7 @@ struct HourlyForecastView: View {
                     }
                    
                 }
+                
               
             }
             .padding()
