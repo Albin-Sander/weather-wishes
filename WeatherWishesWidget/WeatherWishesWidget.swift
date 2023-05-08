@@ -18,7 +18,7 @@ struct Provider: TimelineProvider {
         let temperature = formatter.numberFormatter.number(from: temperatureString)?.doubleValue ?? 0
         let measurement = Measurement(value: temperature, unit: UnitTemperature.celsius)
         let hour = [HourWeather]()
-        return SimpleEntry(date: Date(), city: "Gothenburg", temp: measurement, symbol: "sun.max", hourlyWeatherData: hour)
+        return SimpleEntry(date: Date(), city: "Gothenburg", temp: measurement, symbol: "sun.max", hourlyWeatherData: hour, uvIndex: 0)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
@@ -27,19 +27,34 @@ struct Provider: TimelineProvider {
         let temperature = formatter.numberFormatter.number(from: temperatureString)?.doubleValue ?? 0
         let measurement = Measurement(value: temperature, unit: UnitTemperature.celsius)
         let hour = [HourWeather]()
-        let entry = SimpleEntry(date: Date(), city: "Gothenburg", temp: measurement, symbol: "sun.max", hourlyWeatherData: hour) // snapshot humidity
+        let entry = SimpleEntry(date: Date(), city: "Gothenburg", temp: measurement, symbol: "sun.max", hourlyWeatherData: hour, uvIndex: 0) // snapshot humidity
             completion(entry)
         }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
             let currentDate = Date()
-    
+  
        
             let refreshDate = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
-            let userCity = "Gothenburg"
+           
             let locationManager = CLLocationManager()
             locationManager.requestWhenInUseAuthorization()
+        
+        func getCityName(from location: CLLocation, completionHandler: @escaping (String?) -> Void) {
+            let geocoder = CLGeocoder()
+            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                if let error = error {
+                    print("Error: \(error)")
+                    completionHandler(nil)
+                } else if let placemark = placemarks?.first {
+                    print(placemark.locality ?? "")
+                    completionHandler(placemark.locality)
+                }
+            }
+        }
             Task {
+                let userCity = "Gothenburg"
+               
                 do {
                     if let location = locationManager.location {
                         let currentWeather: Weather? = try await WeatherService.shared.weather(for: location)
@@ -52,7 +67,8 @@ struct Provider: TimelineProvider {
                                 return []
                             }
                         }
-                        let entry = SimpleEntry(date: currentDate, city: userCity, temp: (currentWeather?.currentWeather.temperature)!, symbol: currentWeather?.currentWeather.symbolName ?? "sun.max", hourlyWeatherData: hourlyWeatherData)
+                        
+                        let entry = SimpleEntry(date: currentDate, city: userCity, temp: (currentWeather?.currentWeather.temperature)!, symbol: currentWeather?.currentWeather.symbolName ?? "sun.max", hourlyWeatherData: hourlyWeatherData, uvIndex: currentWeather?.currentWeather.uvIndex.value ?? 0)
                         let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
                         
                         completion(timeline)
@@ -71,6 +87,8 @@ struct SimpleEntry: TimelineEntry {
     let temp: Measurement<UnitTemperature>
     let symbol: String
     let hourlyWeatherData: [HourWeather]
+    let uvIndex: Int
+    
 }
 
 extension Color {
@@ -117,45 +135,87 @@ extension Color {
 struct WeatherWishesWidgetEntryView : View {
     var entry: Provider.Entry
     let iconColor = WeatherIconColor()
+    @Environment(\.widgetFamily) var widgetFamily
+    func getTime() -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        let dateString = formatter.string(from: Date())
+        return dateString
+    }
    
     var body: some View {
         ZStack {
             
-            Color("#ADD8E6")
-            VStack {
-                HStack {
+            
+            if widgetFamily == .systemMedium {
+                Color("#ADD8E6")
+                VStack {
                     HStack {
-                        Label {
-                            Text(entry.temp.formatted())
-                        } icon: {
-                            Image(systemName: "\(entry.symbol).fill")
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(iconColor.setIconColor(icon: entry.symbol)[0], iconColor.setIconColor(icon: entry.symbol).count > 1 ? iconColor.setIconColor(icon: entry.symbol)[1] : Color.black)
+                        HStack {
+                            Label {
+                                Text(entry.temp.formatted())
+                            } icon: {
+                                Image(systemName: "\(entry.symbol).fill")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(iconColor.setIconColor(icon: entry.symbol)[0], iconColor.setIconColor(icon: entry.symbol).count > 1 ? iconColor.setIconColor(icon: entry.symbol)[1] : Color.black)
+                            }
+                            
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            
+                            
+                            
                         }
-                      
-                        .font(.headline)
-                        .fontWeight(.bold)
-                       
-                       
-                           
-                    }
-                    .padding(.top, 10)
-                    .padding(.leading, 10)
-                   
-                    Spacer()
-                 
-                   
-                        Text(entry.city)
-                        .font(.headline)
-                
-                       
+                        .padding(.top, 10)
+                        .padding(.leading, 10)
                         
-                 
-                    .padding(.top, 10)
-                    .padding(.trailing, 10)
+                        Spacer()
+                        
+                        
+                        Text(entry.city)
+                            .font(.headline)
+                        
+                        
+                        
+                        
+                            .padding(.top, 10)
+                            .padding(.trailing, 10)
+                    }
+                    
+                    HourlyForecastWidgetView(hourWeatherlist: entry.hourlyWeatherData)
                 }
-               
-                HourlyForecastWidgetView(hourWeatherlist: entry.hourlyWeatherData)
+            } else if widgetFamily == .systemSmall {
+                Color("#ADD8E6")
+                VStack {
+                    VStack {
+                        Text(entry.city)
+                        Text(entry.temp.formatted())
+                        Image(systemName: "\(entry.symbol).fill")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(iconColor.setIconColor(icon: entry.symbol)[0], iconColor.setIconColor(icon: entry.symbol).count > 1 ? iconColor.setIconColor(icon: entry.symbol)[1] : Color.black)
+                       
+                    }
+                    .font(.headline)
+                    Text("UV: \(entry.uvIndex)")
+                        .font(.footnote)
+                    Text("Latest update \(getTime())")
+                        .font(.system(size: 12))
+                        .padding(.top, 20)
+                }
+     
+            } else if widgetFamily == .accessoryCircular {
+                ZStack {
+                    AccessoryWidgetBackground()
+                    Text(entry.temp.formatted())
+                        .widgetAccentable()
+                }
+            } else if widgetFamily == .accessoryInline {
+                HStack {
+                    Image(systemName: "\(entry.symbol).fill")
+                    Text(entry.temp.formatted())
+                    Text("hej")
+
+                }
             }
        
             
@@ -172,7 +232,7 @@ struct WeatherWishesWidget: Widget {
         }
         .configurationDisplayName("Weather Widget")
         .description("This is a weather widget.")
-        .supportedFamilies([.systemMedium])
+        .supportedFamilies([.systemMedium, .systemSmall, .accessoryCircular, .accessoryInline])
     }
 }
 

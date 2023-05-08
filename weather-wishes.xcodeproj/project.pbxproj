@@ -14,6 +14,7 @@
 		B189B3D32850FA85009A1E36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B189B3D22850FA85009A1E36 /* Assets.xcassets */; };
 		B189B3D62850FA85009A1E36 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B189B3D52850FA85009A1E36 /* Preview Assets.xcassets */; };
 		B189B3DD2850FAA3009A1E36 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189B3DC2850FAA3009A1E36 /* WeatherView.swift */; };
+		B1B4A6D529FC64F1004E7F82 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CB7EDF29F4436D00538D11 /* WeatherViewModel.swift */; };
 		B1B7AD3429F49AFB0068EADC /* HourlyForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CB7ED529F3E1D000538D11 /* HourlyForecastView.swift */; };
 		B1B7AD3729F552190068EADC /* HourlyForeCastWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7AD3529F552170068EADC /* HourlyForeCastWidgetView.swift */; };
 		B1B7AD3829F55A0C0068EADC /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1828A3B28550E7B0098B6B0 /* LocationManager.swift */; };
@@ -292,6 +293,7 @@
 				B1B7AD3829F55A0C0068EADC /* LocationManager.swift in Sources */,
 				B1B7AD3B29F8708B0068EADC /* WeatherIconColor.swift in Sources */,
 				B1CB7EEC29F4934B00538D11 /* WeatherWishesWidgetLiveActivity.swift in Sources */,
+				B1B4A6D529FC64F1004E7F82 /* WeatherViewModel.swift in Sources */,
 				B1CB7EEA29F4934B00538D11 /* WeatherWishesWidgetBundle.swift in Sources */,
 				B1CB7EEE29F4934B00538D11 /* WeatherWishesWidget.swift in Sources */,
 			);
@@ -436,6 +438,7 @@
 				DEVELOPMENT_TEAM = WXA32BTP69;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Location neeed";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow access";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -470,6 +473,7 @@
 				DEVELOPMENT_TEAM = WXA32BTP69;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Location neeed";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow access";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -505,6 +509,7 @@
 				INFOPLIST_FILE = WeatherWishesWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WeatherWishesWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Location neeed";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Location needed";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location neeed";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -538,6 +543,7 @@
 				INFOPLIST_FILE = WeatherWishesWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WeatherWishesWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Location neeed";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Location needed";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location neeed";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
