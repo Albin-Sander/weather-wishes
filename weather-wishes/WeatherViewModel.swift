@@ -35,7 +35,7 @@ import WeatherKit
                     .weather(for: WeatherViewModel.location)
             }.value
         } catch {
-            fatalError("\(error)")
+            print("\(error)")
         }
     }
     

@@ -8,11 +8,29 @@
 import Foundation
 import SwiftUI
 
-
 class WeatherIconColor {
-    
     public func setIconColor(icon: String) -> [Color] {
         switch icon {
+        case let x where x.contains("cloud.bolt.rain"):
+            return [.gray, .blue]
+        case let x where x.contains("cloud.sun"):
+            return [.black, .yellow]
+        case let x where x.contains("sun"):
+            return [.yellow]
+        case "cloud.moon":
+            return [.black, .purple]
+        case "moon.stars":
+            return [.purple, .yellow]
+        default:
+            return [.black]
+        }
+    }
+    
+    
+    public func setIconColorDarkMode(icon: String) -> [Color] {
+        switch icon {
+        case let x where x.contains("cloud.bolt.rain"):
+            return [.gray, .blue]
         case let x where x.contains("cloud.sun"):
             return [.white, .yellow]
         case let x where x.contains("sun"):
